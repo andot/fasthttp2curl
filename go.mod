@@ -1,4 +1,4 @@
-module fasthttp2curl
+module github.com/andot/fasthttp2curl
 
 go 1.15
 
