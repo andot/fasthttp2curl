@@ -14,7 +14,7 @@ var (
 	pool              = bytebufferpool.Pool{}
 )
 
-func GetCurlCommand(req *fasthttp.Request) (string, error) {
+func GetCurlCommand(req *fasthttp.Request) string {
 	buf := pool.Get()
 	defer pool.Put(buf)
 
@@ -47,5 +47,5 @@ func GetCurlCommand(req *fasthttp.Request) (string, error) {
 	buf.Write(bytes.Replace(uri, singleQuote, escapeSingleQuote, -1))
 	buf.WriteByte('\'')
 
-	return buf.String(), nil
+	return buf.String()
 }

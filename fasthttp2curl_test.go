@@ -18,7 +18,7 @@ func ExampleGetCurlCommand() {
 	req.SetRequestURI("http://foo.com/cats")
 	req.SetBodyString(body)
 	req.Header.Set("API_KEY", "123")
-	command, _ := GetCurlCommand(req)
+	command := GetCurlCommand(req)
 	fasthttp.ReleaseRequest(req)
 	fmt.Println(command)
 	// Output:
@@ -31,7 +31,7 @@ func ExampleGetCurlCommand_json() {
 	req.SetRequestURI("http://www.example.com/abc/def.ghi?jlk=mno&pqr=stu")
 	req.SetBodyString(`{"hello":"world","answer":42}`)
 	req.Header.SetContentType("application/json")
-	command, _ := GetCurlCommand(req)
+	command := GetCurlCommand(req)
 	fasthttp.ReleaseRequest(req)
 	fmt.Println(command)
 
@@ -44,7 +44,7 @@ func ExampleGetCurlCommand_noBody() {
 	req.Header.SetMethod(fasthttp.MethodPut)
 	req.SetRequestURI("http://www.example.com/abc/def.ghi?jlk=mno&pqr=stu")
 	req.Header.SetContentType("application/json")
-	command, _ := GetCurlCommand(req)
+	command := GetCurlCommand(req)
 	fasthttp.ReleaseRequest(req)
 	fmt.Println(command)
 
@@ -58,7 +58,7 @@ func ExampleGetCurlCommand_emptyStringBody() {
 	req.SetRequestURI("http://www.example.com/abc/def.ghi?jlk=mno&pqr=stu")
 	req.Header.SetContentType("application/json")
 	req.SetBodyString("")
-	command, _ := GetCurlCommand(req)
+	command := GetCurlCommand(req)
 	fasthttp.ReleaseRequest(req)
 	fmt.Println(command)
 
@@ -72,7 +72,7 @@ func ExampleGetCurlCommand_newlineInBody() {
 	req.SetRequestURI("http://www.example.com/abc/def.ghi?jlk=mno&pqr=stu")
 	req.Header.SetContentType("application/json")
 	req.SetBodyString("hello\nworld")
-	command, _ := GetCurlCommand(req)
+	command := GetCurlCommand(req)
 	fasthttp.ReleaseRequest(req)
 	fmt.Println(command)
 
@@ -87,7 +87,7 @@ func ExampleGetCurlCommand_specialCharsInBody() {
 	req.SetRequestURI("http://www.example.com/abc/def.ghi?jlk=mno&pqr=stu")
 	req.Header.SetContentType("application/json")
 	req.SetBodyString(`Hello $123 o'neill -"-`)
-	command, _ := GetCurlCommand(req)
+	command := GetCurlCommand(req)
 	fasthttp.ReleaseRequest(req)
 	fmt.Println(command)
 
@@ -102,7 +102,7 @@ func ExampleGetCurlCommand_other() {
 	req.Header.SetContentType("application/json")
 	req.SetBodyString(`{"hello":"world","answer":42}`)
 	req.Header.Set("X-Auth-Token", "private-token")
-	command, _ := GetCurlCommand(req)
+	command := GetCurlCommand(req)
 	fasthttp.ReleaseRequest(req)
 	fmt.Println(command)
 
@@ -116,7 +116,7 @@ func ExampleGetCurlCommand_https() {
 	req.Header.SetContentType("application/json")
 	req.SetBodyString(`{"hello":"world","answer":42}`)
 	req.Header.Set("X-Auth-Token", "private-token")
-	command, _ := GetCurlCommand(req)
+	command := GetCurlCommand(req)
 	fasthttp.ReleaseRequest(req)
 	fmt.Println(command)
 
@@ -134,9 +134,7 @@ func BenchmarkGetCurlCommand(b *testing.B) {
 	req.SetRequestURI("http://foo.com")
 	req.SetBodyString(body)
 	for i := 0; i <= b.N; i++ {
-		_, err := GetCurlCommand(req)
-		if err != nil {
-			panic(err)
-		}
+		_ = GetCurlCommand(req)
+
 	}
 }
