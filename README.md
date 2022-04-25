@@ -17,7 +17,7 @@ req.Header.SetMethod(fasthttp.MethodPut)
 req.SetRequestURI("http://www.example.com/abc/def.ghi?jlk=mno&pqr=stu")
 req.SetBodyString(`{"hello":"world","answer":42}`)
 req.Header.SetContentType("application/json")
-command, _ := GetCurlCommand(req)
+command := GetCurlCommand(req)
 fasthttp.ReleaseRequest(req)
 fmt.Println(command)
 
